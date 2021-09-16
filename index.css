@@ -1,0 +1,37 @@
+.pointer {
+    cursor: pointer;
+}
+
+.bubble-left {
+    border: 1px solid #ccc;
+    color: #333;
+    border-radius: 15px;
+    padding:0.7rem;
+    font-size: 14px;
+}
+
+.bubble {
+    background-color: #e6e6e6;
+    color: #333;
+    border-radius: 15px;
+    padding:0.7rem;
+    font-size: 14px;
+}
+
+.avatar {
+    width:40px;
+    height:40px;
+    border-radius: 40px;
+    overflow:hidden;
+}
+.avatar img {
+    height: 40px;
+}
+
+.radius-10 {
+    border-radius: 10px;
+}
+
+.disable-resize {
+    resize: none;
+}

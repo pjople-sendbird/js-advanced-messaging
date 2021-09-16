@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Advance Messaging</title>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"
+        referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"
+        referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sendbird/3.0.154/SendBird.min.js"
+        integrity="sha512-H9toKoQX2ziFquTicYoYH9VlvtaUY1aFtyVyVmv9XOktZ2Af0jX8mh9N4ORf/qQWZWNRwsmtqb6+k8xKHxujqA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous" />
+    <link href="index.css" rel="stylesheet" />
+
+    <script src="index.js"></script>
+    <script>
+        ROLE = ROLE_SELLER;
+    </script>
+</head>
+<body>
+    <!--
+        TITLE
+    -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">Advance Messaging</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                </ul>
+                <form class="d-flex">
+                    <div id="role-label"></div>
+                </form>
+            </div>
+        </div>
+    </nav>
+    <!--
+        BODY
+    -->
+    <div class="container-flow">
+        <table align="center">
+            <tr>
+                <td>
+                    <!--
+                        CARD - LOGIN
+                    -->
+                    <div class="card mt-4" style="width:300px;" id="card-login">
+                        <div class="card-header">
+                            Connect to Sendbird
+                        </div>
+                        <div class="card-body">
+                            <div class="form-floating mb-3">
+                                <input 
+                                    type="text" 
+                                    class="form-control" 
+                                    id="applicationId" 
+                                    placeholder="Enter here..."
+                                    value="6A6CF887-E6F6-4763-84B6-BEFD2410EE42" 
+                                    />
+                                <label for="applicationId">Application ID</label>
+                            </div>
+                            <div class="form-floating mb-3">
+                                <input 
+                                    type="text" 
+                                    class="form-control" 
+                                    id="userId" 
+                                    placeholder="Enter here..."
+                                    value="test1" 
+                                    />
+                                <label for="userId">User ID</label>
+                            </div>
+                            <div class="form-floating mb-3">
+                                <input 
+                                    type="text" 
+                                    class="form-control" 
+                                    id="token" 
+                                    placeholder="Enter here..."
+                                    />
+                                <label for="token">Token (optional)</label>
+                            </div>
+                        </div>
+                        <div class="card-footer text-center">
+                            <button class="btn btn-primary" onclick="connect()">
+                                Login
+                            </button>
+                        </div>
+                    </div>
+                    <!--
+                        CARD - SEND ORDER
+                    -->
+                    <div class="card position-relative mb-3 mt-3" style="display:none;" id="card-send-order">
+                        <div class="card-header">
+                            Send Order to customers
+                        </div>
+                        <div class="p-2">
+                            <div class="p-3 text-muted text-center small">
+                                Add products to the list and start a marketing campaign for your customers!
+                            </div>
+                            <table class="table table-sm table-borderless">
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Product</th>
+                                    <th>Unit</th>
+                                    <th>Price</th>
+                                    <th></th>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <input 
+                                            type="text" 
+                                            class="form-control form-control-sm radius-10" 
+                                            id="newCampaignProductId" 
+                                            placeholder="Product ID..." />
+                                    </td>
+                                    <td>
+                                        <input 
+                                            type="text" 
+                                            class="form-control form-control-sm radius-10" 
+                                            id="newCampaignProductName" 
+                                            placeholder="Product name..." />
+                                        <textarea 
+                                            id="newCampaignProductDesc"
+                                            class="form-control form-control-sm mt-2 disable-resize radius-10" 
+                                            placeholder="Product description..."
+                                            ></textarea>
+                                    </td>
+                                    <td>
+                                        <input 
+                                            id="newCampaignProductUnit"
+                                            type="text" 
+                                            class="form-control form-control-sm radius-10" 
+                                            style="max-width:100px" 
+                                            placeholder="" 
+                                            />
+                                    </td>
+                                    <td>
+                                        <table class="table-borderless">
+                                            <tr>
+                                                <td>$</td>
+                                                <td>
+                                                    <input 
+                                                        id="newCampaignProductPrice"    
+                                                        type="number" 
+                                                        class="form-control form-control-sm radius-10" 
+                                                        style="max-width:100px" 
+                                                        placeholder="0.00" 
+                                                        />
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                    <td>
+                                        <button class="btn btn-primary btn-sm" onclick="addToOrderAndRedraw()">
+                                            Add to order
+                                        </button>
+                                    </td>
+                                </tr>
+                            </table>
+                            <div class="mt-2 mb-2 text-center small border-top pt-2" id="productsToSend">
+                                <span class="text-muted">No products added</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <table class="mt-3" style="height:70vh">
+                        <tr>
+                            <td valign="top">
+                                <!--
+                                    CARD - CHANNEL LIST
+                                -->
+                                <div class="card border-0" style="max-width:600px; display:none;" id="card-channels">
+                                    <div class="card-body">
+                                        <div id="channelList">
+                                            Loading...
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--
+                                    CARD PENDING ORDERS
+                                -->
+                                <div class="card mt-3" id="card-pending-orders" style="max-width:600px; display:none;">
+                                    <div class="card-header">
+                                        Pending orders
+                                    </div>
+                                    <div class="card-body">
+                                        <div id="pendingOrders">
+                                            Loading...
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td valign="top">
+                                <!--
+                                    CARD - MESSAGES
+                                -->
+                                <div class="card border-0 position-relative" style="display:none;" id="card-messages">
+                                    <div class="card-body" style="width:650px;">
+                                        <div id="messages" class="position-absolute" style="left:0; right:0; top:0; height:700px; overflow-y:auto;">
+                                            Loading...
+                                        </div>
+                                    </div>
+                                    <div class="card-footer border text-center position-absolute" style="bottom:-750px; left:0; right:0; height:60px;">
+                                        <table width="100%">
+                                            <tr>
+                                                <td>
+                                                    <input type="text" class="form-control" placeholder="Enter message..." id="newMessage" />
+                                                </td>
+                                                <td width="80">
+                                                    <button class="btn btn-primary btn-sm" onclick="sendMessage()">
+                                                        Send
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+    </div>
+</body>
+</html>
